@@ -1,27 +1,207 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>Weird Code Collection</title>
-  <style>
-    body{font-family:system-ui; max-width:800px; margin:40px auto; padding:0 20px;}
-    pre{background:#f6f8fa; padding:1em; border-radius:8px; overflow:auto;}
-    section{margin-bottom:40px;}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Weird Code Collection</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
+  background: #0f1117;
+  color: #e6e6e6;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 顶部标题 */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #161a23;
+  border-bottom: 1px solid #272b3b;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  z-index: 10;
+}
+.header h1 {
+  font-size: 1.4rem;
+  background: linear-gradient(90deg, #79b8ff, #b197f2);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* 左侧导航 */
+.sidebar {
+  width: 240px;
+  background: #161a23;
+  border-right: 1px solid #272b3b;
+  padding-top: 70px;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+}
+.nav-item {
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  transition: 0.2s;
+  border-left: 3px solid transparent;
+}
+.nav-item:hover {
+  background: #212633;
+  border-left-color: #79b8ff;
+}
+.nav-item.active {
+  background: #212633;
+  border-left-color: #b197f2;
+  font-weight: bold;
+}
+
+/* 右侧内容区 */
+.content {
+  margin-left: 240px;
+  margin-top: 60px;
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+}
+.section {
+  display: none;
+}
+.section.active {
+  display: block;
+}
+.section h2 {
+  margin-bottom: 1rem;
+  color: #f0f0f0;
+  font-size: 1.3rem;
+}
+
+/* 代码卡片 */
+.code-card {
+  background: #161a23;
+  border-radius: 8px;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  border: 1px solid #272b3b;
+  transition: 0.2s;
+}
+.code-card:hover {
+  border-color: #79b8ff;
+  transform: translateY(-2px);
+}
+.code-card pre {
+  background: #0d0f14;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  color: #dcdcaa;
+  margin: 0.6rem 0;
+}
+.code-card .desc {
+  color: #99a7bf;
+  font-size: 0.9rem;
+}
+</style>
 </head>
+
 <body>
+
+<!-- 顶部 -->
+<div class="header">
   <h1>Weird Code Collection</h1>
+</div>
 
-  <section>
-    <h2>JSFuck</h2>
-    <pre>(![]+[])[+[]]</pre>
-    <p>result：'f'</p>
+<!-- 左侧导航 -->
+<div class="sidebar">
+  <div class="nav-item active" data-target="js">JavaScript</div>
+  <div class="nav-item" data-target="python">Python</div>
+  <div class="nav-item" data-target="c">C/C++</div>
+  <div class="nav-item" data-target="bash">Bash</div>
+  <div class="nav-item" data-target="other">Other</div>
+</div>
+
+<!-- 内容区域 -->
+<div class="content">
+
+  <!-- JS 模块 -->
+  <section class="section active" id="js">
+    <h2>JavaScript 符号魔术</h2>
+    <div class="code-card">
+      <pre>(![]+[])[+[]]</pre>
+      <div class="desc">结果：'f'</div>
+    </div>
+    <div class="code-card">
+      <pre>+[]</pre>
+      <div class="desc">结果：0</div>
+    </div>
   </section>
 
-  <section>
-    <h2>Python 冷知识</h2>
-    <pre>not []</pre>
-    <p>结果：True</p>
+  <!-- Python 模块 -->
+  <section class="section" id="python">
+    <h2>Python Weird Code</h2>
+    <div class="code-card">
+      <pre>not []</pre>
+      <div class="desc">结果：True</div>
+    </div>
   </section>
+
+  <!-- C 模块 -->
+  <section class="section" id="c">
+    <h2>C/C++ Tricks</h2>
+    <div class="code-card">
+      <pre>a ^= b; b ^= a; a ^= b;</pre>
+      <div class="desc">交换变量不使用临时变量</div>
+    </div>
+  </section>
+
+  <!-- Bash 模块 -->
+  <section class="section" id="bash">
+    <h2>Bash One-liners</h2>
+    <div class="code-card">
+      <pre>echo $((1+2))</pre>
+      <div class="desc">结果：3</div>
+    </div>
+  </section>
+
+  <!-- Other -->
+  <section class="section" id="other">
+    <h2>Other Languages</h2>
+    <div class="code-card">
+      <pre>// 你的代码</pre>
+      <div class="desc">说明</div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// 切换导航
+const items = document.querySelectorAll('.nav-item')
+items.forEach(item => {
+  item.addEventListener('click', () => {
+    // 导航高亮
+    items.forEach(i => i.classList.remove('active'))
+    item.classList.add('active')
+    // 内容切换
+    const target = item.dataset.target
+    document.querySelectorAll('.section').forEach(s => {
+      s.classList.remove('active')
+    })
+    document.getElementById(target).classList.add('active')
+  })
+})
+</script>
 </body>
 </html>
