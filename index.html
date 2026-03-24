@@ -12,9 +12,9 @@
 }
 
 body {
-  font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
-  background: #0f1117;
-  color: #e6e6e6;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #FDFBF5; /* 米色底色 */
+  color: #2A2A2A;
   display: flex;
   height: 100vh;
   overflow: hidden;
@@ -27,8 +27,8 @@ body {
   left: 0;
   width: 100%;
   height: 60px;
-  background: #161a23;
-  border-bottom: 1px solid #272b3b;
+  background: #FFF9E8;
+  border-bottom: 1px solid #EAE2D2;
   display: flex;
   align-items: center;
   padding: 0 2rem;
@@ -36,45 +36,45 @@ body {
 }
 .header h1 {
   font-size: 1.4rem;
-  background: linear-gradient(90deg, #79b8ff, #b197f2);
-  -webkit-background-clip: text;
-  color: transparent;
+  color: #8C6D3F;
 }
 
 /* 左侧导航 */
 .sidebar {
-  width: 240px;
-  background: #161a23;
-  border-right: 1px solid #272b3b;
+  width: 220px;
+  background: #FFF9E8;
+  border-right: 1px solid #EAE2D2;
   padding-top: 70px;
   position: fixed;
   height: 100vh;
   overflow-y: auto;
 }
 .nav-item {
-  padding: 0.8rem 1.5rem;
+  padding: 0.9rem 1.5rem;
   cursor: pointer;
   transition: 0.2s;
-  border-left: 3px solid transparent;
+  border-radius: 6px;
+  margin: 4px 10px;
+  color: #555;
 }
 .nav-item:hover {
-  background: #212633;
-  border-left-color: #79b8ff;
+  background: #F5E9CF;
 }
 .nav-item.active {
-  background: #212633;
-  border-left-color: #b197f2;
+  background: #F0DBA5;
   font-weight: bold;
+  color: #704E24;
 }
 
 /* 右侧内容区 */
 .content {
-  margin-left: 240px;
+  margin-left: 220px;
   margin-top: 60px;
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
   height: calc(100vh - 60px);
+  line-height: 1.65;
 }
 .section {
   display: none;
@@ -84,33 +84,32 @@ body {
 }
 .section h2 {
   margin-bottom: 1rem;
-  color: #f0f0f0;
-  font-size: 1.3rem;
+  color: #704E24;
+}
+.section p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
 }
 
 /* 代码卡片 */
 .code-card {
-  background: #161a23;
+  background: #FFF9E8;
+  border: 1px solid #EAE2D2;
   border-radius: 8px;
   padding: 1.2rem;
-  margin-bottom: 1rem;
-  border: 1px solid #272b3b;
-  transition: 0.2s;
-}
-.code-card:hover {
-  border-color: #79b8ff;
-  transform: translateY(-2px);
+  margin: 1rem 0;
 }
 .code-card pre {
-  background: #0d0f14;
+  background: #F5F0E6;
   padding: 1rem;
   border-radius: 6px;
   overflow-x: auto;
-  color: #dcdcaa;
+  color: #333;
   margin: 0.6rem 0;
+  font-family: monospace;
 }
 .code-card .desc {
-  color: #99a7bf;
+  color: #666;
   font-size: 0.9rem;
 }
 </style>
@@ -138,10 +137,13 @@ body {
   <!-- JS 模块 -->
   <section class="section active" id="js">
     <h2>JavaScript 符号魔术</h2>
+    <p>这里可以写普通文字介绍，比如 JS 隐式转换非常有趣，可以只用符号拼出各种内容。</p>
+
     <div class="code-card">
       <pre>(![]+[])[+[]]</pre>
       <div class="desc">结果：'f'</div>
     </div>
+
     <div class="code-card">
       <pre>+[]</pre>
       <div class="desc">结果：0</div>
@@ -151,6 +153,7 @@ body {
   <!-- Python 模块 -->
   <section class="section" id="python">
     <h2>Python Weird Code</h2>
+    <p>Python 也有很多奇怪的小语法，非常适合收藏。</p>
     <div class="code-card">
       <pre>not []</pre>
       <div class="desc">结果：True</div>
@@ -160,6 +163,7 @@ body {
   <!-- C 模块 -->
   <section class="section" id="c">
     <h2>C/C++ Tricks</h2>
+    <p>C 语言的奇技淫巧也很多～</p>
     <div class="code-card">
       <pre>a ^= b; b ^= a; a ^= b;</pre>
       <div class="desc">交换变量不使用临时变量</div>
@@ -178,6 +182,7 @@ body {
   <!-- Other -->
   <section class="section" id="other">
     <h2>Other Languages</h2>
+    <p>这里可以放其他语言的怪异代码～</p>
     <div class="code-card">
       <pre>// 你的代码</pre>
       <div class="desc">说明</div>
@@ -187,18 +192,13 @@ body {
 </div>
 
 <script>
-// 切换导航
 const items = document.querySelectorAll('.nav-item')
 items.forEach(item => {
   item.addEventListener('click', () => {
-    // 导航高亮
     items.forEach(i => i.classList.remove('active'))
     item.classList.add('active')
-    // 内容切换
     const target = item.dataset.target
-    document.querySelectorAll('.section').forEach(s => {
-      s.classList.remove('active')
-    })
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'))
     document.getElementById(target).classList.add('active')
   })
 })
